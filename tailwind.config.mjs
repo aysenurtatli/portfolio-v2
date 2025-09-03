@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
   darkMode: 'class',
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,18 +11,21 @@ export default {
       backgroundSize: {
         '400': '400% 100%',
       },
+       fontFamily: {
+        sans: ["var(--font-geist)", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+      },
       colors: {
        darkTheme: '#11001F',
       },
-      fontFamily: {
-        Roboto: ["Roboto"]
-      },
       animation: {
         slide: 'slide 40s linear infinite',
-        borderAnimation: "borderColorChange 3s infinite linear",
-        'gradient-move': 'gradient-move 5s infinite linear',
+        borderAnimation: "borderColorChange 5s infinite linear",
+        'gradient-move': 'gradient-move 6s infinite linear',
         'light-glow': 'light-glow 5s infinite linear',
+        spin: 'spin 5s linear infinite',
       },
+      
       keyframes: {
         slide: {
           '0%': {
@@ -32,6 +35,11 @@ export default {
             transform: 'translateX(-100%)', 
           },
         },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+
         'light-glow': {
           '0%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
@@ -54,8 +62,11 @@ export default {
         },
         
       },
+      
 
     },
   },
   plugins: [],
 };
+
+export default config;

@@ -1,24 +1,28 @@
 'use client'
-import { Roboto } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Background from "./components/Background";
 
-const roboto = Roboto({
-  subsets: ["latin"], weight: ["400", "500", "700"]
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
 });
 
 
 export default function RootLayout({ children }) {
-
-
-
-
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} antialiased bg-zinc-950 bg-[url(/images/background.png)] bg-cover bg-fixed bg-center bg-no-repeat`}
       >
+        <Background />
         <Navbar/>
         <main>
           {children}

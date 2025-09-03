@@ -7,10 +7,9 @@ const Carousel = () => {
       ];
 
 
-
   return (
     <>
-      <div className="relative bg-black text-zinc-500 shadow-sm overflow-hidden py-[30px] text-[20px] md:text-[30px] whitespace-nowrap group my-10">
+      <div className="relative backdrop-blur-sm border border-white/10 text-zinc-500 shadow-sm overflow-hidden py-[30px] text-[20px] md:text-[30px] whitespace-nowrap group ">
         <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-zinc-950 to-transparent pointer-events-none z-10" />
         <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-zinc-950 to-transparent pointer-events-none z-10" />
         <div className="flex space-x-10 animate-slide">
