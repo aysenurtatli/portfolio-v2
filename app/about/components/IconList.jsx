@@ -2,7 +2,7 @@ import React from 'react'
 
 const IconList = ({title, items}) => {
   return (
-    <div className=''>
+    <div>
         <span className='text-zinc-300 font-mono text-[20px] block mb-2'>{title}</span>
         <div className='flex flex-wrap gap-3 items-center text-zinc-300'>
             {items.map((item, index) => (
