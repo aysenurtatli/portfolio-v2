@@ -1,11 +1,29 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import Project from './components/Project';
-import { projects } from './data/projectsData';
+"use client";
+import React, { useState, useEffect } from "react";
+import Project from "./components/Project";
+import { projects } from "./data/projectsData";
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
-  const { webDesign, frontendMentor, productDesign, graphicDesign } = projects;
+  //const { webDesign, frontendMentor, productDesign, graphicDesign } = projects;
+  const [projects, setProjects] = useState([]);
+
+  const groupedProjects = projects.reduce((acc, project) => {
+    if (!acc[project.category]) {
+      acc[project.category] = [];
+    }
+    acc[project.category].push(project);
+    return acc;
+  }, {});
+
+  useEffect(() => {
+    async function fetchProjects() {
+      const res = await fetch("/api/projects");
+      const data = await res.json();
+      setProjects(data.data);
+    }
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
@@ -25,10 +43,17 @@ const Projects = () => {
         </div>
       ) : (
         <div className="animate-fade-in space-y-10">
-          <Project title="Web Projects" lists={webDesign} />
-          <Project title="Frontend Mentor Projects" lists={frontendMentor} />
+          {Object.keys(groupedProjects).map((category) => (
+            <Project
+              key={category}
+              title={category.replace("-", " ").toUpperCase()} // başlık için düzenleme
+              lists={groupedProjects[category]}
+            />
+          ))}
+
+          {/* <Project title="Frontend Mentor Projects" lists={frontendMentor} />
           <Project title="Graphic Projects" lists={graphicDesign} />
-          <Project title="Product Design Projects" lists={productDesign} />
+          <Project title="Product Design Projects" lists={productDesign} /> */}
         </div>
       )}
     </section>

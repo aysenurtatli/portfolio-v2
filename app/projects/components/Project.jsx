@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -12,14 +12,16 @@ const Project = ({ title, lists }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); 
+    setIsClient(true);
   }, []);
 
-  if (!isClient) return null; 
+  if (!isClient) return null;
 
   return (
     <div>
-      <h3 className="text-zinc-300 font-mono text-[20px] font-bold my-5">{title}</h3>
+      <h3 className="text-zinc-300 font-mono text-[20px] font-bold my-5">
+        {title}
+      </h3>
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
@@ -36,16 +38,18 @@ const Project = ({ title, lists }) => {
       >
         {lists.map((list, index) => (
           <SwiperSlide key={index}>
-            <Link href={list.href} target="_blank">
+            <Link href={list.link} target="_blank">
               <div className="relative rounded-xl h-auto p-4 bg-blue-800/10 backdrop-blur-md border border-white/20 hover:border-indigo-200 duration-200">
                 <Image
                   src={list.image}
-                  alt={list.name}
+                  alt={list.title}
                   width={0}
                   height={0}
                   className="w-full h-auto rounded-md"
                 />
-                <p className="text-xl text-zinc-200 font-semibold my-4">{list.name}</p>
+                <p className="text-xl text-zinc-200 font-semibold my-4">
+                  {list.title}
+                </p>
               </div>
             </Link>
           </SwiperSlide>
