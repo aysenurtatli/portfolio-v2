@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { formatDate } from "@/helpers/formatDate";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -27,7 +28,7 @@ const ProjectList = () => {
       });
       const data = await res.json();
       if (data.ok) {
-        setProjects(projects.filter((p) => p._id !== id)); // state güncelle
+        setProjects(projects.filter((p) => p._id !== id));
       } else {
         alert("Delete failed: " + data.message);
       }
@@ -38,31 +39,32 @@ const ProjectList = () => {
   };
 
   return (
-    <div className="text-white">
+    <div className="text-white max-h-[700px] overflow-y-scroll pr-4">
       {projects?.map((project) => (
         <div
           key={project._id}
           className="mb-6 border-b border-white/20 pb-4 relative"
         >
-          <div className="flex items-center gap-4">
+          <div className="flex items-start gap-4">
             <img
               src={project.image}
               alt={project.title}
-              style={{ width: "100px" }}
+              className="w-[150px]"
             />
             <div>
               <h2>Title: {project.title}</h2>
               <h2>Category: {project.category}</h2>
 
-              <p>
-                <a
-                  href={project.link}
-                  className="hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {project.link}
-                </a>
+              <a
+                href={project.link}
+                className="hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github Link: {project.link}
+              </a>
+              <p className="text-sm text-gray-500">
+                {formatDate(project.createdAt)}
               </p>
             </div>
           </div>
