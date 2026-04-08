@@ -10,12 +10,10 @@ const ProjectList = () => {
     async function fetchProjects() {
       const res = await fetch("/api/projects");
       const data = await res.json();
-      setProjects(data.data);
+      setProjects(data.data); // Supabase'den gelen data
     }
     fetchProjects();
   }, []);
-
-  console.log(projects.data);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this project?")) return;
@@ -24,11 +22,11 @@ const ProjectList = () => {
       const res = await fetch("/api/delete-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id }), // Supabase UUID gönder
       });
       const data = await res.json();
       if (data.ok) {
-        setProjects(projects.filter((p) => p._id !== id));
+        setProjects(projects.filter((p) => p.id !== id)); // id ile filtrele
       } else {
         alert("Delete failed: " + data.message);
       }
@@ -42,7 +40,7 @@ const ProjectList = () => {
     <div className="text-white max-h-[700px] overflow-y-scroll pr-4">
       {projects?.map((project) => (
         <div
-          key={project._id}
+          key={project.id} // artık id kullan
           className="mb-6 border-b border-white/20 pb-4 relative"
         >
           <div className="flex items-start gap-4">
@@ -54,7 +52,6 @@ const ProjectList = () => {
             <div>
               <h2>Title: {project.title}</h2>
               <h2>Category: {project.category}</h2>
-
               <a
                 href={project.link}
                 className="hover:underline"
@@ -64,12 +61,12 @@ const ProjectList = () => {
                 Github Link: {project.link}
               </a>
               <p className="text-sm text-gray-500">
-                {formatDate(project.createdAt)}
+                {formatDate(project.created_at)} {/* Supabase alanı */}
               </p>
             </div>
           </div>
           <button
-            onClick={() => handleDelete(project._id)}
+            onClick={() => handleDelete(project.id)} // id kullan
             className="absolute top-0 right-0"
           >
             <IoMdClose size={24} className="text-white" />

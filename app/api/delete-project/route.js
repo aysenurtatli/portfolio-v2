@@ -1,20 +1,24 @@
-import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
+import { supabase } from "@/lib/supabase";
 
 export async function POST(req) {
   try {
     const { id } = await req.json();
-    if (!id)
+
+    if (!id) {
       return new Response(
         JSON.stringify({ ok: false, message: "Missing id" }),
-        { status: 400 }
+        { status: 400 },
       );
+    }
 
-    const client = await clientPromise;
-    const db = client.db("portfolio");
-    const projects = db.collection("projects");
+    const { error } = await supabase.from("projects").delete().eq("id", id);
 
-    await projects.deleteOne({ _id: new ObjectId(id) });
+    if (error) {
+      console.error("Supabase error:", error);
+      return new Response(JSON.stringify({ ok: false, message: "DB error" }), {
+        status: 500,
+      });
+    }
 
     return new Response(JSON.stringify({ ok: true }));
   } catch (err) {
